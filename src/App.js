@@ -33,7 +33,7 @@ function App() {
   return (
     <div className="container">
       <div className="info">
-        <input onChange={changeText} value={text} />
+        <input onChange={changeText} value={text} placeholder="Type here..." />
         <select onChange={changeLanguage} value={language}>
           {Object.keys(languages).map(key => (
             <option key={key} value={key}>
