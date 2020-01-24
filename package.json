@@ -6,6 +6,7 @@
     "email": "rheajt@gmail.com",
     "name": "jordan rhea"
   },
+  "homepage": "https://jordanrhea.com/custom-keyboards",
   "license": "MIT",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
