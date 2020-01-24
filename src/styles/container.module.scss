@@ -1,0 +1,28 @@
+.container {
+  display: grid;
+  height: 100%;
+  padding: 1rem;
+  grid-gap: 1rem;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 'input select' 'message message';
+}
+
+.input {
+  grid-area: input;
+}
+
+.select {
+  grid-area: select;
+}
+
+.message {
+  grid-area: message;
+}
+
+.input,
+.select,
+.message {
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
+  background-color: white;
+}

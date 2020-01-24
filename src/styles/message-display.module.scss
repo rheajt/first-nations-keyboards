@@ -1,0 +1,16 @@
+.messageDisplay {
+  height: 100%;
+  text-align: center;
+  padding: 1rem;
+  font-size: 2rem;
+
+  span {
+    animation: blinking 1000ms steps(5, start) infinite;
+  }
+
+  @keyframes blinking {
+    to {
+      visibility: hidden;
+    }
+  }
+}
