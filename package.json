@@ -1,12 +1,12 @@
 {
-  "name": "custom-keyboards",
+  "name": "first-nations-keyboards",
   "version": "0.1.0",
   "private": true,
   "author": {
     "email": "rheajt@gmail.com",
     "name": "jordan rhea"
   },
-  "homepage": "https://jordanrhea.com/custom-keyboards",
+  "homepage": "https://jordanrhea.com/first-nations-keyboards",
   "license": "MIT",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
