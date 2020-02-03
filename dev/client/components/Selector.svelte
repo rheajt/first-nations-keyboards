@@ -3,15 +3,21 @@
   import { crossfade } from "svelte/transition";
   import { flip } from "svelte/animate";
   import allLanguages from "../../../languages/index.js";
-  import Storage from "../js/storage.js";
+  import Storage from "../classes/Storage.js";
   import Save from "./Save.svelte";
 
-  const installed = Storage.read();
-  const languages = Object.keys(allLanguages).map(key => ({
-    id: key,
-    installed: installed.languages.includes(key),
-    name: key
-  }));
+  let languages = readStorage();
+
+  async function readStorage() {
+    const installed = await Storage.read(["installed"]);
+    const languages = Object.keys(allLanguages).map(key => ({
+      id: key,
+      installed: installed.includes(key),
+      name: key
+    }));
+
+    return languages;
+  }
 
   const [send, receive] = crossfade({
     fallback(node, params) {
@@ -58,8 +64,6 @@
   }
 
   h2 {
-    /* font-size: 2em;
-    font-weight: 200; */
     user-select: none;
   }
 
@@ -105,38 +109,44 @@
   }
 </style>
 
-<div class="board">
-  <div class="column">
-    <h2>Languages</h2>
-    <div class="content">
-      {#each languages.filter(l => !l.installed) as lang (lang.id)}
-        <label
-          in:receive={{ key: lang.id }}
-          out:send={{ key: lang.id }}
-          animate:flip>
-          <input type="checkbox" bind:checked={lang.installed} />
-          {lang.name}
-          <button on:click={() => remove(lang)}>x</button>
-        </label>
-      {/each}
+{#await languages}
+  <p>loading...</p>
+{:then number}
+  <div class="board">
+    <div class="column">
+      <h2>Languages</h2>
+      <div class="content">
+        {#each languages.filter(l => !l.installed) as lang (lang.id)}
+          <label
+            in:receive={{ key: lang.id }}
+            out:send={{ key: lang.id }}
+            animate:flip>
+            <input type="checkbox" bind:checked={lang.installed} />
+            {lang.name}
+            <button on:click={() => remove(lang)}>x</button>
+          </label>
+        {/each}
+      </div>
     </div>
-  </div>
 
-  <div class="column">
-    <h2>Installed</h2>
-    <div class="content">
-      {#each languages.filter(l => l.installed) as lang (lang.id)}
-        <label
-          class={lang.installed ? 'installed' : ''}
-          in:receive={{ key: lang.id }}
-          out:send={{ key: lang.id }}
-          animate:flip>
-          <input type="checkbox" bind:checked={lang.installed} />
-          {lang.name}
-          <button on:click={() => remove(lang)}>x</button>
-        </label>
-      {/each}
+    <div class="column">
+      <h2>Installed</h2>
+      <div class="content">
+        {#each languages.filter(l => l.installed) as lang (lang.id)}
+          <label
+            class={lang.installed ? 'installed' : ''}
+            in:receive={{ key: lang.id }}
+            out:send={{ key: lang.id }}
+            animate:flip>
+            <input type="checkbox" bind:checked={lang.installed} />
+            {lang.name}
+            <button on:click={() => remove(lang)}>x</button>
+          </label>
+        {/each}
+      </div>
     </div>
+    <Save on:click={save}>Save</Save>
   </div>
-  <Save on:click={save}>Save</Save>
-</div>
+{:catch error}
+  <pre>{JSON.stringify(error, null, 2)}</pre>
+{/await}

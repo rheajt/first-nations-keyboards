@@ -8,9 +8,9 @@ const prod = mode === 'production';
 
 module.exports = {
   entry: {
-    // bundle: ['./client/main.js'],
     options: './client/options.js',
     actions: './client/actions.js',
+    inject: './client/inject.js',
   },
   resolve: {
     extensions: ['.mjs', '.js', '.svelte'],
@@ -66,8 +66,6 @@ module.exports = {
       template: './client/template.html',
       filename: './actions/index.html',
     }),
-    // new HtmlWebpackInlineSourcePlugin(),
-    // new HtmlWebpackInlineSourcePlugin(),
     new FileManagerPlugin({
       onEnd: [
         {
@@ -78,9 +76,9 @@ module.exports = {
             },
           ],
         },
-        // {
-        //   delete: ['./public'],
-        // },
+        {
+          delete: ['./public'],
+        },
       ],
     }),
   ],
