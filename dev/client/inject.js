@@ -12,24 +12,24 @@ async function readStorage() {
   });
 }
 
-function startTimer(eng, char, target) {
-  clearTimeout(timeout);
-  timeout = setTimeout(() => {
-    target.value =
-      target.value.substring(0, target.value.length - eng.length) + char;
-    str = '';
-    console.log('cleared', str.length);
-  }, 2000);
-}
+// function startTimer(eng, char, target) {
+//   clearTimeout(timeout);
+//   timeout = setTimeout(() => {
+//     target.value =
+//       target.value.substring(0, target.value.length - eng.length) + char;
+//     str = '';
+//     console.log('cleared', str.length);
+//   }, 2000);
+// }
 
-function writeChar(char, target) {
-  if (!chars) {
-    target.value = target.value.substring(0, target.value.length - 1);
-  } else {
-    target.value =
-      target.value.substring(0, target.value.length - str.length) + char;
-  }
-}
+// function writeChar(char, target) {
+//   if (!chars) {
+//     target.value = target.value.substring(0, target.value.length - 1);
+//   } else {
+// target.value =
+//   target.value.substring(0, target.value.length - str.length) + char;
+//   }
+// }
 
 document.addEventListener('keyup', async ({ keyCode, target, ...evt }) => {
   const active = await readStorage();
@@ -37,15 +37,21 @@ document.addEventListener('keyup', async ({ keyCode, target, ...evt }) => {
   if (!active) {
     return;
   }
-
+  // const totalString = target.value;
   const keyHit = String.fromCharCode(keyCode).toLowerCase();
-  console.log(str + keyHit);
   const calced = languages[active][str + keyHit];
 
+  console.log(str.length);
   /************/
-  if (calced) {
+
+  if (!calced && !str.length) {
+    console.log('not calced but no str');
     str += keyHit;
-    startTimer(str, calced, target);
+  } else if (calced) {
+    str += keyHit;
+    console.log(str, calced);
+    target.value =
+      target.value.substring(0, target.value.length - str.length) + calced;
   } else {
     console.log('doesnt match', str, calced);
     str = '';

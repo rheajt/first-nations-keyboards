@@ -3,7 +3,6 @@ export default {
   i: '\u1403',
   o: '\u1405',
   a: '\u140A',
-  c: '',
   ii: '\u140E',
   oo: '\u1412',
   aa: '\u1417',
